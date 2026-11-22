@@ -285,7 +285,8 @@ class _FortListPageState extends State<FortListPage> {
         child: Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            '${forts.length} forts · straight-line distance',
+            '${forts.length} forts · straight-line distance · '
+            'Locations © OpenStreetMap contributors',
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ),

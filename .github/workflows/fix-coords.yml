@@ -1,0 +1,43 @@
+name: Fix coordinates (OpenStreetMap + Wikidata)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/fix_coords.py
+      - .github/workflows/fix-coords.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Check every fort against OpenStreetMap and Wikidata
+        run: python3 scripts/fix_coords.py
+
+      - name: Save corrected data and report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/forts.json COORDINATE_REPORT.md
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Correct fort coordinates from OpenStreetMap + Wikidata"
+            git push
+          fi
+
+      - name: Build a new APK with the corrected data
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run build.yml --ref main

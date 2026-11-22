@@ -53,3 +53,6 @@ flutter run
 {"name":"Sinhagad","district":"Pune","lat":18.36639,"lon":73.75583,"trek":"~300 steps (Top) / Trail · Easy-Moderate","approx":false,"type":"fort"}
 ```
 `approx: true` shows "Approx. location" in the app. 11 forts are marked like this: Gondhanapur, Jamner, Mailagad, Mankigad, Nandoshi, Narsimhagad, Palashi, Pimpalgaon Raja, Pimpaldoh, Sakharkherda and Virathan. Fix their coordinates when you can.
+
+## Data sources
+Fort coordinates are checked against OpenStreetMap (© OpenStreetMap contributors, ODbL) and Wikidata (CC0) by the "Fix coordinates" GitHub workflow. Results are in `COORDINATE_REPORT.md`.
