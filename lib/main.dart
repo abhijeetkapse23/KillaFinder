@@ -160,8 +160,13 @@ class _FortListPageState extends State<FortListPage> {
   }
 
   Future<void> _openDirections(Fort f) async {
-    final uri = Uri.parse(
-        'https://www.google.com/maps/dir/?api=1&destination=${f.lat},${f.lon}');
+    // Navigate by fort name, so Google Maps uses its own exact location for the
+    // fort, even if our stored coordinates are a little off.
+    final place = '${f.name}, ${f.district.replaceAll('/', ' ')}, Maharashtra';
+    final uri = Uri.https('www.google.com', '/maps/dir/', {
+      'api': '1',
+      'destination': place,
+    });
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       if (mounted) {
         ScaffoldMessenger.of(context)
